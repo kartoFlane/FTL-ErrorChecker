@@ -1,0 +1,27 @@
+/*
+  Verifies that the referenced animSheet actually exists
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/anim_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String sheetName = e.getValue();
+  if (sheetName == null) {
+    result.add(new Error("E_MISSING_VAL"));
+  }
+  Element animSheet = getCachedAnimSheet(sheetName);
+  if (animSheet == null)
+    animSheet = getCachedAnimSheet(sheetName);
+
+  if (animSheet == null)
+    result.add(new Error("W_BAD_ANIM_SHEET"));
+
+  return result;
+}

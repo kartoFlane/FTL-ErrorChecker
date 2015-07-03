@@ -1,0 +1,46 @@
+/*
+  Verifies various errors related to the <boarders> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/races.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String clazz = e.getAttributeValue("class");
+  String min = e.getAttributeValue("min");
+  String max = e.getAttributeValue("max");
+
+  if (clazz != null && !isPlayableRace(clazz)) {
+    result.add(new Error("E_INVALID_ARG", "class = " + clazz));
+  }
+
+  int minV = 0;
+  int maxV = 0;
+
+  if (min == null) {
+    result.add(new Error("E_MISSING_ATTR", "min"));
+  } else {
+    minV = Integer.parseInt(min);
+    if (minV < 0)
+      result.add(new Error("W_NUM_RANGE", "negative values are not allowed"));
+  }
+
+  if (max == null) {
+    result.add(new Error("E_MISSING_ATTR", "max"));
+  } else {
+    maxV = Integer.parseInt(max);
+    if (maxV < 0)
+      result.add(new Error("W_NUM_RANGE", "negative values are not allowed"));
+  }
+
+  if (maxV - minV < 0) {
+    result.add(new Error("E_INVALID_ARG", "min is greater than max"));
+  }
+    
+  return result;
+}

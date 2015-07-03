@@ -1,0 +1,198 @@
+/*
+	This file lists scripted checks that are to be ran against tags of given types
+	Names are relative to the 'scripts' folder, so a script file located in
+	"database/scripts/my/script.bsh" should be listed here as "my/script.bsh"
+*/
+
+{
+	"preload": [
+		/*
+			Scripts that preload data via cacheData() function
+			This function is called automatically by the ErrorChecker after parsing,
+			right before validation phase. Don't ever call it manually in the scripts.
+		*/
+		"data/anim_cache.bsh",
+		"data/blueprint_cache.bsh",
+		"data/event_cache.bsh",
+		"data/imageList_cache.bsh",
+		"xml/allowed_children.bsh",
+		"xml/required_children.bsh",
+		"xml/check_attrs.bsh"
+	],
+
+	"xml": {
+		// For every encountered tag...
+		"<all>": [
+			// ...run the checks in the following script files:
+			"xml/allowed_children.bsh",
+			"xml/required_children.bsh",
+			"xml/check_attrs.bsh"
+		],
+
+		// For tags of the specified type...
+		"anim": [
+			"xml/verify_lowercase_name.bsh",
+			"xml/check_anim.bsh"
+		],
+
+		"sheet": [
+			"xml/check_anim_sheet.bsh"
+		],
+
+		"animSheet": [
+			"xml/check_animSheet.bsh",
+			"xml/verify_lowercase_name.bsh"
+		],
+
+		"augBlueprint": [
+			"xml/verify_uppercase_name.bsh",
+			"xml/check_aug.bsh"
+		],
+
+		"shipBlueprint": [
+			"xml/verify_uppercase_name.bsh"
+		],
+
+		"blueprintList": [
+			"xml/verify_uppercase_name.bsh",
+			"xml/check_list_empty.bsh"
+		],
+
+		"droneBlueprint": [
+			"xml/verify_uppercase_name.bsh"
+		],
+
+		"weaponBlueprint": [
+			"xml/verify_uppercase_name.bsh",
+			"xml/check_blueprint.bsh"
+		],
+
+		"name": [
+			"xml/check_blueprint.bsh"
+		],
+
+		"weapon": [
+			"xml/check_blueprint.bsh"
+		],
+
+		"drone": [
+			"xml/check_blueprint.bsh"
+		],
+
+		"choice": [
+			"xml/check_choice_req.bsh"
+		],
+		
+		"event": [
+            "xml/check_event.bsh"
+		],
+		
+		"destroyed": [
+            "xml/check_event.bsh"
+		],
+		
+		"surrender": [
+            "xml/check_event.bsh"
+		],
+		
+		"deadCrew": [
+            "xml/check_event.bsh"
+		],
+		
+		"gotaway": [
+            "xml/check_event.bsh"
+		],
+		
+		"quest": [
+            "xml/check_quest.bsh"
+		],
+		
+		"eventList": [
+			"xml/check_list_empty.bsh"
+		],
+
+		"type": [
+			"xml/check_type.bsh"
+		],
+		
+		"text": [
+            "xml/check_event_text.bsh"
+		],
+		
+		"ship": [
+            "xml/check_event_ships.bsh"
+		],
+		
+		"autoReward": [
+            "xml/check_event_autoreward.bsh"
+		],
+		
+		"environment": [
+            "xml/check_event_environment.bsh"
+		],
+		
+		"item": [
+            "xml/check_event_item.bsh"
+		],
+		
+		"fleet": [
+            "xml/check_event_fleet.bsh"
+		],
+		
+		"augment": [
+            "xml/check_event_augments.bsh"
+		],
+		
+		"img": [
+            "xml/check_event_images.bsh"
+		],
+		
+		"crewMember": [
+            "xml/check_event_crewMember.bsh"
+		],
+		
+		"removeCrew": [
+            "xml/check_event_removeCrew.bsh"
+		],
+		
+		"damage": [
+            "xml/check_event_damage.bsh"
+		],
+		
+		"boarders": [
+            "xml/check_event_boarders.bsh"
+		],
+		
+		"status": [
+            "xml/check_event_status.bsh"
+		]
+	},
+
+	"txt": {
+		// For every encountered layout object
+		"<all>": [
+			//"txt/txt_test.bsh"
+		],
+
+		"X_OFFSET": [
+		],
+
+		"Y_OFFSET": [
+		],
+
+		"HORIZONTAL": [
+		],
+
+		"VERTICAL": [
+		],
+
+		"ELLIPSE": [
+		],
+
+		"ROOM": [
+		],
+
+		"DOOR": [
+		]
+	}
+}

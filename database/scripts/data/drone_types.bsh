@@ -1,0 +1,38 @@
+String[] _playableDroneTypes = new String[] {
+  "BATTLE", "BOARDER", "COMBAT", "DEFENSE",
+  "REPAIR", "SHIELD", "SHIP_REPAIR"
+};
+
+boolean isDroneType(String type) {
+  if (isPlayableDroneType(type) || "HACKING".equals(type))
+    return true;
+
+  return false;
+}
+
+boolean isPlayableDroneType(String type) {
+  for (String s : _playableDroneTypes) {
+    if (s.equals(type)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+String droneTypeToString(String droneType) {
+  droneType = droneType.toUpperCase();
+    switch (droneType) {
+      case "BATTLE":
+        return "Anti-Personnel";
+      case "REPAIR":
+        return "System Repair";
+      case "SHIP_REPAIR":
+        return "Hull Repair";
+      default:
+        if (droneType == null) {
+          return null;
+        } else {
+          return droneType.substring(0, 1).toUpperCase() + droneType.substring(1).toLowerCase();
+        }
+    }
+}

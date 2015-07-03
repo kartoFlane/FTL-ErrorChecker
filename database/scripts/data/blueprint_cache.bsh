@@ -1,0 +1,78 @@
+/*
+  This script stores various blueprint and blueprintList tags from
+  blueprints.xml, autoBlueprints.xml, dlcBlueprints.xml, dlcBlueprintsOverwrite.xml
+  and dlcPirateBlueprints.xml in order to allow other scripts to quickly check if
+  the specific blueprint exists in the game files.
+
+  To get the tag <blueprint name="FOO">, call getCachedBlueprint("FOO") in your script.
+  To get the tag <blueprintList name="BAR">, call getCachedBlueprintList("BAR") in your
+  script.
+*/
+
+import com.kartoflane.ftl.errorchecker.core.Database;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.ValidationManager;
+
+import org.jdom2.Element;
+// =======================================================
+
+// If not defined, define
+if (_blueprintMap == void) {
+  super._blueprintMap = new HashMap();
+  super._blueprintListMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _blueprintMap.clear();
+  _blueprintListMap.clear();
+
+  Database db = context.getDatabase();
+  ValidationManager vm = context.getValidationManager();
+
+  FilePointer[] blues = {
+    db.getFile("data/blueprints.xml"),
+    db.getFile("data/autoBlueprints.xml"),
+    db.getFile("data/dlcBlueprints.xml"),
+    db.getFile("data/dlcBlueprintsOverwrite.xml"),
+    db.getFile("data/dlcPirateBlueprints.xml")
+  };
+  // Should it ever be required to scan more files for blueprints, replace
+  // the above array with the following code:
+  //    ArrayList blues = db.listDataFiles();
+
+  String[] blueprints = {
+    "shipBlueprint", "weaponBlueprint", "droneBlueprint",
+    "systemBlueprint", "crewBlueprint", "augBlueprint"
+  };
+
+  for (FilePointer fi : blues) {
+    if (!db.isIgnoredName(fi.getPack().getName(), fi.getName())) {
+      Element root = vm.getRootXMLElement(fi.getInnerPath());
+      if (root != null) {
+        for (String blueprintTag : blueprints) {
+          for (Element blueprint : root.getChildren(blueprintTag)) {
+            String name = blueprint.getAttributeValue("name");
+            if (name != null) {
+              _blueprintMap.put(name, blueprint);
+            }
+          }
+        }
+        for (Element blueprintList : root.getChildren("blueprintList")) {
+          String name = blueprintList.getAttributeValue("name");
+          if (name != null) {
+            _blueprintListMap.put(name, blueprintList);
+          }
+        }
+      }
+    }
+  }
+}
+
+Element getCachedBlueprint(String name) {
+  return _blueprintMap.get(name);
+}
+
+Element getCachedBlueprintList(String name) {
+  return _blueprintListMap.get(name);
+}

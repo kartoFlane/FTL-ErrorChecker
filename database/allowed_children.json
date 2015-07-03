@@ -1,0 +1,216 @@
+{
+	// This file lists tag names that are allowed to be nested inside other tags
+	// If a tag is found inside another, but is not found on a list in this file,
+	// it'll be reported as an error.
+
+	// For XML tags of the specified type...
+	"event": [
+		// ...allow XML tags of these types to be nested inside:
+		"choice", "event", "text", "environment", "fleet", "img", "distressBeacon",
+		"store", "ship", "repair", "autoReward", "augment", "weapon", "drone",
+		"crewMember", "damage", "boarders", "reveal_map", "modifyPursuit", "quest",
+		"unlockShip", "item_modify", "status", "secretSector", "removeCrew", "upgrade"
+	],
+
+	// Use the same array as "event" declared above (must come after)
+	"choice": "event",
+
+	"removeCrew": [
+		"choice", "event", "text", "environment", "fleet", "img", "distressBeacon",
+		"store", "ship", "repair", "autoReward", "augment", "weapon", "drone",
+		"crewMember", "damage", "boarders", "reveal_map", "modifyPursuit", "quest",
+		"unlockShip", "item_modify", "status", "secretSector", "removeCrew", "upgrade",
+		"clone" // The only difference from "event" is "clone"
+	],
+
+	"eventList": [
+		"event"
+	],
+
+	"textList": [
+		"text"
+	],
+	
+	"eventCounts": [
+		"event"
+	],
+
+	"ship": [
+		"surrender", "escape", "gotaway", "deadCrew", "destroyed", "crew", "weaponOverride"
+	],
+	
+	"surrender": "event",
+	"escape": "event",
+	"gotaway": "event",
+	"deadCrew": "event",
+	"destroyed": "event",
+	
+	"crew": [
+		"crewMember"
+	],
+	
+	"weaponOverride": [
+		"name"
+	],
+	
+	"item_modify": [
+		"item"
+	],
+	
+	"blueprintList": [
+		"name"
+	],
+
+	"crewBlueprint": [
+		"desc", "cost", "title", "short", "rarity", "powerList", "bp", "colorList"
+	],
+
+	"systemBlueprint": [
+		"type", "title", "desc", "startPower", "maxPower", "rarity", "upgradeCost",
+		"cost", "locked", "bp"
+	],
+
+	"weaponBlueprint": [
+		"type", "title", "short", "locked", "desc", "tooltip", "damage", "ion", "sysDamage",
+		"persDamage", "speed", "missiles", "shots", "length", "lockdown", "sp", "fireChance",
+		"breachChance", "stunChance", "hullBust", "cooldown", "power", "cost", "bp", "rarity",
+		"image", "explosion", "launchSounds", "hitShipSounds", "hitShieldSounds", "missSounds",
+		"weaponArt", "tip", "iconImage", "color", "drone_targetable", "flavorType", "radius",
+		"spin", "projectiles", "chargeLevels", "boost", "stun"
+	],
+
+	"projectiles": [
+		"projectile"
+	],
+	
+	"boost": [
+		"type", "amount", "count"
+	],
+
+	"itemBlueprint": [
+		"type", "title", "desc", "cost", "rarity"
+	],
+
+	"augBlueprint": [
+		"title", "desc", "cost", "bp", "rarity", "value", "stackable"
+	],
+
+	"droneBlueprint": [
+		"type", "level", "title", "short", "desc", "power", "cooldown", "dodge", "speed",
+		"cost", "bp", "locked", "droneImage", "image", "weaponBlueprint", "rarity",
+		"tooltip", "tip", "iconImage", "target"
+	],
+
+	"shipBlueprint": [
+		"class", "name", "maxSector", "minSector", "unlock", "desc", "systemList",
+		"weaponSlots", "droneSlots", "weaponList", "droneList", "health", "maxPower",
+		"crewCount", "aug", "shieldImage", "cloakImage", "floorImage", "boardingAI"
+	],
+
+	"anim": [
+		"sheet", "desc", "time"
+	],
+
+	"weaponAnim": [
+		"sheet", "desc", "chargedFrame", "fireFrame", "firePoint", "mountPoint",
+		"delayChargeAnim", "chargeImage", "boost"
+	],
+
+	"sectorDescription": [
+		"nameList", "trackList", "rarityList", "startEvent", "event"
+	],
+	
+	"sectorType": [
+		"sector"
+	],
+	
+	"nameList": [
+		"name"
+	],
+	
+	"trackList": [
+		"track"
+	],
+	
+	"rarityList": [
+		"blueprint"
+	],
+
+	"offsets": [
+		"cloak", "floor"
+	],
+
+	"weaponMounts": [
+		"mount"
+	],
+
+	"systemList": [
+		"pilot", "oxygen", "shields", "engines", "weapons", "drones", "medbay",
+		"clonebay", "doors", "mind", "hacking", "artillery", "teleporter",
+		"sensors", "cloaking", "battery"
+	],
+	
+	"powerList": [
+		"power"
+	],
+	
+	"colorList": [
+		"layer"
+	],
+	
+	"layer": [
+		"color"
+	],
+	
+	"color": [
+		"r", "g", "b"
+	],
+	
+	"upgradeCost": [
+		"level"
+	],
+	
+	"launchSounds": [
+		"sound"
+	],
+	
+	"hitShipSounds": "launchSounds",
+	"hitShieldSounds": "launchSounds",
+	"missSounds": "launchSounds",
+	
+	"slot": [
+		"direction", "number"
+	],
+	
+	"weaponList": [
+		"weapon"
+	],
+	
+	"droneList": [
+		"drone"
+	],
+	
+	"music": [
+		"track"
+	],
+
+	"track": [
+		"name", "explore", "combat"
+	],
+
+	"roomLayout": [
+		"computerGlow"
+	],
+	
+	"imageList": [
+		"img"
+	],
+	
+	"explosion": [
+        "gib"
+	],
+	
+	"gib": [
+        "velocity", "direction", "angular", "glowOffset", "x", "y"
+	]
+}

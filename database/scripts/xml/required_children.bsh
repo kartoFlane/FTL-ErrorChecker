@@ -1,0 +1,74 @@
+/*
+  Checks whether an element has all the required child elements
+  that the game expects it to have.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.utils.ParseUtils;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+import com.fasterxml.jackson.databind.JsonNode;
+// =====================================================
+
+// If not defined, define
+if (_reqMap == void) {
+  super._reqMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+    _reqMap.clear();
+
+  File childrenFile = new File("database/required_children.json");
+  JsonNode node = ParseUtils.readFileJson(childrenFile);
+  
+  Iterator nodeIterator = node.fields();
+  while (nodeIterator.hasNext()) {
+    Map.Entry entry = nodeIterator.next();
+
+    String k = entry.getKey();
+    JsonNode v = entry.getValue();
+
+    if (v.isArray()) {
+      List l = new ArrayList();
+      for (JsonNode member : v) {
+        l.add(member.asText());
+      }
+
+      if (_reqMap.containsKey(k)) {
+        _reqMap.get(k).addAll(l);
+      } else {
+        _reqMap.put(k, new HashSet(l));
+      }
+    } else {
+      // Naively assuming that node is textual, Json parser will handle error output
+      String ref = v.asText();
+      if (!_reqMap.containsKey(ref))
+        throw new IllegalArgumentException("JsonNode not loaded yet: " + ref);
+
+      if (_reqMap.containsKey(k)) {
+        _reqMap.get(k).addAll(_reqMap.get(ref));
+      } else {
+        _reqMap.put(k, _reqMap.get(ref));
+      }
+    }
+  }
+}
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String name = e.getName();
+  if (name.matches("gib\\d*"))
+    name = "gib";
+
+  Set childrenSet = _reqMap.get(name);
+  if (childrenSet != null) {
+    for (String child : childrenSet) {
+      if (e.getChild(child) == null) {
+        result.add(new Error("E_MISSING_TAG", child));
+      }
+    }
+  }
+
+  return result;
+}

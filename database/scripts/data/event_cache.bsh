@@ -1,0 +1,93 @@
+/*
+  This script stores various events, eventList, and textList tags from the various
+  event files, in order to allow other scripts to quickly check if the specific
+  event exists in the game files.
+
+  To get the tag <event name="FOO">, call getCachedEvent("FOO") in your script.
+  To get the tag <eventList name="BAR">, call getCachedEventList("BAR") in your script.
+*/
+
+import com.kartoflane.ftl.errorchecker.core.Database;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.ValidationManager;
+
+import org.jdom2.Element;
+// =======================================================
+
+// If not defined, define
+if (_eventMap == void) {
+  super._eventMap = new HashMap();
+  super._eventListMap = new HashMap();
+  super._textListMap = new HashMap();
+  super._shipMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _eventMap.clear();
+  _eventListMap.clear();
+  _textListMap.clear();
+  _shipMap.clear();
+
+  Database db = context.getDatabase();
+  ValidationManager vm = context.getValidationManager();
+
+  ArrayList eventFiles = db.listDataFiles();
+
+  for (FilePointer fi : eventFiles) {
+    if (fi.isTXT() || vm.hasLayout(fi.getInnerPath()))
+      continue;
+
+    if (!db.isIgnoredName(fi.getPack().getName(), fi.getName())) {
+      Element root = vm.getRootXMLElement(fi.getInnerPath());
+      if (root != null) {
+        for (Element event : root.getChildren("event")) {
+          String name = event.getAttributeValue("name");
+          if (name != null) {
+            _eventMap.put(name, event);
+          }
+        }
+        for (Element eventList : root.getChildren("eventList")) {
+          String name = eventList.getAttributeValue("name");
+          if (name != null) {
+            _eventListMap.put(name, eventList);
+          }
+        }
+        for (Element textList : root.getChildren("textList")) {
+          String name = textList.getAttributeValue("name");
+          if (name != null) {
+            _textListMap.put(name, textList);
+          }
+        }
+        for (Element ship : root.getChildren("ship")) {
+          String name = ship.getAttributeValue("name");
+          if (name != null) {
+            _shipMap.put(name, ship);
+          }
+        }
+      }
+    }
+  }
+}
+
+boolean isEventTag(String t) {
+  return "event".equals(t) || "choice".equals(t) || "removeCrew".equals(t) ||
+      "surrender".equals(t) || "escape".equals(t) || "gotaway".equals(t) ||
+      "deadCrew".equals(t) || "destroyed".equals(t);
+}
+
+Element getCachedEvent(String name) {
+  return _eventMap.get(name);
+}
+
+Element getCachedEventList(String name) {
+  return _eventListMap.get(name);
+}
+
+Element getCachedTextList(String name) {
+  return _textListMap.get(name);
+}
+
+Element getCachedShip(String name) {
+  return _shipMap.get(name);
+}

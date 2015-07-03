@@ -1,0 +1,60 @@
+/*
+  Checks various errors related to the <animSheet> tag.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/anim_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String file = e.getValue();
+  String name = e.getAttributeValue("name");
+  String w = e.getAttributeValue("w");
+  String h = e.getAttributeValue("h");
+  String fw = e.getAttributeValue("fw");
+  String fh = e.getAttributeValue("fh");
+  
+  if (file == null) {
+    result.add(new Error("E_MISSING_VAL"));
+  } else {
+    Database db = context.getDatabase();
+    FilePointer fp = db.getFile("img/" + file);
+    if (fp == null) {
+        result.add(new Error("E_FILE_NOT_FOUND"));
+    }
+  }
+  
+  if (name == null)
+    result.add(new Error("E_MISSING_ATTR", "name"));
+  if (w == null)
+    result.add(new Error("E_MISSING_ATTR", "w"));
+  if (h == null)
+    result.add(new Error("E_MISSING_ATTR", "h"));
+  if (fw == null)
+    result.add(new Error("E_MISSING_ATTR", "fw"));
+  if (fh == null)
+    result.add(new Error("E_MISSING_ATTR", "fh"));
+
+  if (w != null && fw != null) {
+    int wV = Integer.parseInt(w);
+    int fwV = Integer.parseInt(fw);
+    if (wV % fwV != 0) {
+        result.add(new Error("I_FRAME_COUNT_NOT_INT", "width, " + wV + " % " + fwV + " != 0"));
+    }
+  }
+
+  if (h != null && fh != null) {
+    int hV = Integer.parseInt(h);
+    int fhV = Integer.parseInt(fh);
+    if (hV % fhV != 0) {
+      result.add(new Error("I_FRAME_COUNT_NOT_INT", "height, " + hV + " % " + fhV + " != 0"));
+    }
+  }
+
+  return result;
+}

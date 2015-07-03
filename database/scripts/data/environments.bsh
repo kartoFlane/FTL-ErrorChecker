@@ -1,0 +1,12 @@
+String[] _environments = new String[] {
+  "SUN", "ASTEROID", "NEBULA", "STORM", "PULSAR", "PDS"
+};
+
+boolean isEnvironment(String type) {
+  for (String s : _environments) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}

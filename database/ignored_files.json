@@ -1,0 +1,11 @@
+{
+	// This file lists filenames that the Error Checker will ignore and won't parse
+	// or validate, meaning that their contents will be essentially invisible.
+
+	"data.dat": [
+		"credits.txt", "achievements.xml", "tutorial.xml"
+	],
+
+	"resource.dat": [
+	]
+}

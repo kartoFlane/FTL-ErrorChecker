@@ -1,0 +1,82 @@
+/*
+  Checks whether attributes contain the proper values that the
+  game expects them to have.
+*/
+
+import org.jdom2.Element;
+import org.jdom2.Attribute;
+import com.kartoflane.ftl.errorchecker.utils.ParseUtils;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+import com.fasterxml.jackson.databind.JsonNode;
+// =====================================================
+
+// If not defined, define
+if (_attrMap == void) {
+  super._attrMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _attrMap.clear();
+
+  File childrenFile = new File("database/attribute_types.json");
+  JsonNode node = ParseUtils.readFileJson(childrenFile);
+  
+  Iterator nodeIterator = node.fields();
+  while (nodeIterator.hasNext()) {
+    Map.Entry entry = nodeIterator.next();
+
+    String k = entry.getKey();
+    JsonNode v = entry.getValue();
+
+    _attrMap.put(k, v.asText());
+  }
+}
+
+boolean isBoolean(String s) {
+  return s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false");
+}
+
+boolean isInteger(String s) {
+  try {
+    Integer.parseInt(s);
+  } catch (Exception e) {
+    return false;
+  }
+  return true;
+}
+
+boolean isReal(String s) {
+  try {
+    Float.parseFloat(s);
+  } catch (Exception e) {
+    return false;
+  }
+  return true;
+}
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  for (Attribute a : e.getAttributes()) {
+    String k = a.getName();
+    String v = a.getValue();
+    if (!_attrMap.containsKey(k)) {
+      continue;
+    }
+    String type = _attrMap.get(k);
+
+    if (type.equals("boolean")) {
+      if (!isBoolean(v))
+        result.add(new Error("E_NOT_BOOL"), k + " = " + v);
+    } else if (type.equals("integer")) {
+      if (!isInteger(v))
+        result.add(new Error("E_NOT_INT"), k + " = " + v);
+    } else if (type.equals("real")) {
+      if (!isReal(v))
+        result.add(new Error("E_NOT_REAL"), k + " = " + v);
+    }
+  }
+
+  return result;
+}

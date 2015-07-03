@@ -1,0 +1,13 @@
+/*
+	Explain what the script does here
+*/
+
+import com.kartoflane.ftl.layout.LayoutObject;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+// =======================================================
+
+Set validate(CheckerContext context, LayoutObject lo) {
+	Set result = new HashSet();
+	// Do stuff here.
+	return result;
+}

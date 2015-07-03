@@ -1,0 +1,37 @@
+/*
+  Verifies various errors related to the <damage> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/systems.bsh");
+source("/database/scripts/data/event_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String parentName = e.getParentElement().getName();
+
+  if (isEventTag(parentName)) {
+    String amount = e.getAttributeValue("amount");
+    String system = e.getAttributeValue("system");
+    String effect = e.getAttributeValue("effect");
+    
+    if (amount == null) {
+      result.add(new Error("E_MISSING_ATTR", "amount"));
+    }
+    if (system != null && !isSystem(system) &&
+        !"random".equals(system) && !"room".equals(system)) {
+      result.add(new Error("E_INVALID_ARG", "system = " + system));
+    }
+    if (effect != null &&
+        !effect.equals("fire") && !effect.equals("breach") &&
+        !effect.equals("random") && !effect.equals("all")) {
+      result.add(new Error("E_INVALID_ARG", "effect = " + effect));
+    }
+  }
+
+  return result;
+}

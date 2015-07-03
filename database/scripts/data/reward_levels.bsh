@@ -1,0 +1,12 @@
+String[] _rewardLevels = new String[] {
+  "LOW", "MED", "MEDIUM", "HIGH", "RANDOM"
+};
+
+boolean isRewardLevel(String type) {
+  for (String s : _rewardLevels) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}

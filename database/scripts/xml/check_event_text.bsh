@@ -1,0 +1,39 @@
+/*
+  Verifies various errors related to the <text> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/event_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+  
+  String parentName = e.getParentElement().getName();
+  
+  if (parentName.equals("event")) {
+    String load = e.getAttributeValue("load");
+    String val = e.getValue();
+    if (load == null) {
+      if (val == null) {
+        result.add(new Error("W_TEXT_NO_VALUE"));
+      } else if (val.trim().equals("")) {
+        result.add(new Error("W_TEXT_WHITESPACE"));
+      } else if (val.length() >= 440) {
+        result.add(new Error("W_TEXT_TOO_LONG", "Text length is " + val.length()));
+      }
+    } else {
+      if (val == null || val.equals("")) {
+        if (getCachedTextList(load) == null) {
+          result.add(new Error("E_BAD_TEXTLIST"));
+        }
+      } else {
+          result.add(new Error("E_TEXT_VAL_LOAD"));
+      }
+    }
+  }
+
+  return result;
+}

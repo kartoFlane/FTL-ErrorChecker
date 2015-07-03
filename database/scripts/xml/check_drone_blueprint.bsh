@@ -1,0 +1,39 @@
+/*
+  Verifies that a referenced blueprint actually exists.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/drone_types.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String tagName = e.getName();
+  String parName = e.getParentElement().getName();
+
+  Element tempEl = e.getChild("type");
+  if (tempEl == null) {
+    result.add(new Error("E_MISSING_TAG", "<type>"));
+  }
+  else {
+    String type = tempEl.getValue();
+    if (isDroneType(type)) {
+      if ("COMBAT".equals(type) || "DEFENSE".equals(type)) {
+        tempEl = e.getChild("weaponBlueprint");
+        if (tempEl == null) {
+          result.add(new Error("E_MISSING_TAG", "weaponBlueprint"));
+        }
+
+        tempEl = e.getChild("droneImage");
+        if (tempEl == null) {
+          result.add(new Error("E_MISSING_TAG", "droneImage"));
+        }
+      }
+    }
+  }
+    
+  return result;
+}

@@ -1,0 +1,21 @@
+/*
+  Verifies various errors related to the <removeCrew> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/races.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String clazz = e.getAttributeValue("class");
+
+  if (clazz != null && !isPlayableRace(clazz)) {
+    result.add(new Error("E_INVALID_ARG", "class = " + clazz));
+  }
+
+  return result;
+}

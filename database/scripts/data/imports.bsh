@@ -1,0 +1,44 @@
+/*
+  This file contains all imports that any script file for the ErrorChecker
+  could ever want. If you're not sure what to import, just add this line:
+
+    source("/database/scripts/data/imports.bsh");
+
+  at the top of your script file.
+  
+  Note that doing so is not a recommended practice. Always try to only
+  import what you really need.
+*/
+
+// Import JDOM2 (XML)
+import org.jdom2.Attribute;
+import org.jdom2.AttributeList;
+import org.jdom2.CDATA;
+import org.jdom2.Comment;
+import org.jdom2.Content;
+import org.jdom2.ContentList;
+import org.jdom2.Element;
+import org.jdom2.Parent;
+import org.jdom2.Text;
+import org.jdom2.Document;
+import org.jdom2.Namespace;
+import org.jdom2.located.LocatedAttribute;
+import org.jdom2.located.LocatedCDATA;
+import org.jdom2.located.LocatedContent;
+import org.jdom2.located.LocatedElement;
+import org.jdom2.located.LocatedText;
+import org.jdom2.input.JDOMParseException;
+
+// Import Jackson (Json)
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+// Import ErrorChecker stuff
+import com.kartoflane.ftl.errorchecker.utils.ParseUtils;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.Database;
+import com.kartoflane.ftl.errorchecker.processing.ValidationManager;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+import com.kartoflane.ftl.layout.LayoutObject;
+import com.kartoflane.ftl.layout.LayoutObject.LOType;

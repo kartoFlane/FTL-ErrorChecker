@@ -1,0 +1,98 @@
+/*
+  Checks whether a child can be a descendant of its parent tag, judging by
+  the two elements' names.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.utils.ParseUtils;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+import com.fasterxml.jackson.databind.JsonNode;
+source("/database/scripts/data/systems.bsh");
+// =====================================================
+
+// If not defined, define
+if (_childrenMap == void) {
+  super._childrenMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _childrenMap.clear();
+
+  File childrenFile = new File("database/allowed_children.json");
+  JsonNode node = ParseUtils.readFileJson(childrenFile);
+  
+  Iterator nodeIterator = node.fields();
+  while (nodeIterator.hasNext()) {
+    Map.Entry entry = nodeIterator.next();
+
+    String k = entry.getKey();
+    JsonNode v = entry.getValue();
+
+    if (v.isArray()) {
+      List l = new ArrayList();
+      for (JsonNode member : v) {
+        l.add(member.asText());
+      }
+
+      if (_childrenMap.containsKey(k)) {
+        _childrenMap.get(k).addAll(l);
+      } else {
+        _childrenMap.put(k, new HashSet(l));
+      }
+    } else {
+      // Naively assuming that node is textual, Json parser will handle error output
+      String ref = v.asText();
+      if (!_childrenMap.containsKey(ref))
+        throw new IllegalArgumentException("JsonNode not loaded yet: " + ref);
+
+      if (_childrenMap.containsKey(k)) {
+        _childrenMap.get(k).addAll(_childrenMap.get(ref));
+      } else {
+        _childrenMap.put(k, _childrenMap.get(ref));
+      }
+    }
+  }
+}
+
+boolean handleSystem(String parentName, String childName) {
+  if (isSystem(parentName)) {
+    if (childName.equals("slot") && (systemCanContainStation(parentName) ||
+        parentName.equals("hacking"))) {
+      // A lot of vanilla ships have <slot> tag in hacking
+      // It's not harmful, so just let it be...
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+}
+
+boolean isAllowed(String parentName, String childName) {
+  if (handleSystem(parentName, childName))
+    return true;
+
+    if (childName.matches("gib\\d*"))
+      childName = "gib";
+    if (parentName.matches("gib\\d*"))
+      parentName = "gib";
+
+  Set childrenSet = _childrenMap.get(parentName);
+  if (childrenSet == null)
+    return false;
+  return childrenSet.contains(childName);
+}
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  Element parent = e.getParentElement();
+  if (parent != null && !parent.getName().equals("wrapper")) {
+    if (!isAllowed(parent.getName(), e.getName())) {
+      result.add(new Error("E_INVALID_ELEMENT"));
+    }
+  }
+
+  return result;
+}

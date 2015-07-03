@@ -1,0 +1,55 @@
+/*
+  Verifies various errors related to the <status> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/systems.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String type = e.getAttributeValue("type");
+  String target = e.getAttributeValue("target");
+  String system = e.getAttributeValue("system");
+  String amount = e.getAttributeValue("amount");
+  int amountV = 0;
+
+  if (system == null) {
+    result.add(new Error("E_MISSING_ATTR", "system"));
+  } else if (!isEventApplicableSystem(system)) {
+    result.add(new Error("E_INVALID_ARG", "system = " + system));
+  }
+
+  if (target == null) {
+    result.add(new Error("E_MISSING_ATTR", "target"));
+  } else if (!target.equals("player") && !target.equals("enemy")) {
+    result.add(new Error("E_INVALID_ARG", "target = " + target));
+  }
+
+  if (amount == null) {
+    if (type == null || !type.equals("clear")) {
+      result.add(new Error("E_MISSING_ATTR", "amount"));
+    }
+  } else {
+    amountV = Integer.parseInt(amount);
+    if (amountV < 0) {
+      result.add(new Error("E_INVALID_ARG", "negative values are not allowed"));
+    }
+  }
+
+  if (type == null) {
+    result.add(new Error("E_MISSING_ATTR", "type"));
+  } else {
+    if (!type.equals("clear") && !type.equals("divide") &&
+        !type.equals("loss") && !type.equals("limit")) {
+      result.add(new Error("E_INVALID_ARG", "type = " + type));
+    } else if (type.equals("clear") && amountV != 100) {
+      result.add(new Error("I_STATUS_CLEAR_V"));
+    }
+  }
+
+  return result;
+}

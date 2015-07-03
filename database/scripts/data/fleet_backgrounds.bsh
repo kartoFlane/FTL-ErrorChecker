@@ -1,0 +1,12 @@
+String[] _fleets = new String[] {
+  "FED", "REBEL", "BATTLE"
+};
+
+boolean isFleetBackground(String type) {
+  for (String s : _fleets) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}

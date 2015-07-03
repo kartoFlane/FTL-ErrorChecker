@@ -1,0 +1,168 @@
+{
+	// This file lists names that the Error Checker will ignore
+
+	// For XML tags of the specified type...
+	"animSheet": [
+		// ...ignore the following values for the 'name' attribute:
+		"human", "engi", "energy", "rock", "crystal", "mantis", "slug", "anaerobic",
+		"repair", "repair_death", "battle", "battle_death", "boarder_ion", "boarder_ion_death",
+
+		"fire_large", "fire_small", "breach",
+
+		"crystal_1", "crystal_2",
+
+		"custom_repair", "custom_repair", "custom_type"
+	],
+
+	"weaponAnim": [
+		"default"
+	],
+
+	"anim": [
+		"explosion1",
+		
+		"ghost_death", "ghost_portrait", "crewLaser",
+		
+		// Hacking drone animations
+		"drone_hack_fly",
+		
+		// Repair drone animations
+		"repair_death_right", "repair_death_left", "repair_repair",
+		"repair_power_down", "repair_power_up", "repair_portrait",
+		"repair_walk_down", "repair_walk_right", "repair_walk_left", "repair_walk_up",
+		"repair_fire_down", "repair_fire_right", "repair_fire_left", "repair_fire_up",
+		"repair_shoot_down", "repair_shoot_right", "repair_shoot_left", "repair_shoot_up",
+		
+		// Battle drone animations
+		"battle_death_right", "battle_death_left",
+		"battle_power_down", "battle_power_up", "battle_portrait",
+		"battle_walk_down", "battle_walk_right", "battle_walk_left", "battle_walk_up",
+		"battle_shoot_down", "battle_shoot_right", "battle_shoot_left", "battle_shoot_up",
+		
+		// Ion drone animations
+		"boarder_ion_death_right", "boarder_ion_death_left",
+		"boarder_ion_power_down", "boarder_ion_power_up", "boarder_ion_portrait",
+		"boarder_ion_walk_down", "boarder_ion_walk_right", "boarder_ion_walk_left", "boarder_ion_walk_up",
+		"boarder_ion_shoot_down", "boarder_ion_shoot_right", "boarder_ion_shoot_left", "boarder_ion_shoot_up",
+		"boarder_ion_attack", "boarder_ion_ion", "boarder_ion_glow",
+		
+		// Human animations
+		"human_clone", "human_death_right", "human_death_left", "human_repair",
+		"human_walk_down", "human_walk_right", "human_walk_left", "human_walk_up",
+		"human_shoot_down", "human_shoot_right", "human_shoot_left", "human_shoot_up",
+		"human_fire_down", "human_fire_right", "human_fire_left", "human_fire_up",
+		"human_punch_down", "human_punch_up", "human_teleport",
+		"human_type_down", "human_type_right", "human_type_left", "human_type_up",
+		"human_portrait",
+		
+		// Engi animations
+		"engi_clone", "engi_death_right", "engi_death_left", "engi_repair",
+		"engi_walk_down", "engi_walk_right", "engi_walk_left", "engi_walk_up",
+		"engi_shoot_down", "engi_shoot_right", "engi_shoot_left", "engi_shoot_up",
+		"engi_fire_down", "engi_fire_right", "engi_fire_left", "engi_fire_up",
+		"engi_punch_down", "engi_punch_up", "engi_teleport",
+		"engi_type_down", "engi_type_right", "engi_type_left", "engi_type_up",
+		"engi_portrait",
+		
+		// Zoltan animations
+		"energy_clone", "energy_death_right", "energy_death_left", "energy_repair",
+		"energy_walk_down", "energy_walk_right", "energy_walk_left", "energy_walk_up",
+		"energy_shoot_down", "energy_shoot_right", "energy_shoot_left", "energy_shoot_up",
+		"energy_fire_down", "energy_fire_right", "energy_fire_left", "energy_fire_up",
+		"energy_punch_down", "energy_punch_up", "energy_teleport",
+		"energy_type_down", "energy_type_right", "energy_type_left", "energy_type_up",
+		"energy_portrait",
+		
+		// Rock animations
+		"rock_clone", "rock_death_right", "rock_death_left", "rock_repair",
+		"rock_walk_down", "rock_walk_right", "rock_walk_left", "rock_walk_up",
+		"rock_shoot_down", "rock_shoot_right", "rock_shoot_left", "rock_shoot_up",
+		"rock_fire_down", "rock_fire_right", "rock_fire_left", "rock_fire_up",
+		"rock_punch_down", "rock_punch_up", "rock_teleport",
+		"rock_type_down", "rock_type_right", "rock_type_left", "rock_type_up",
+		"rock_portrait",
+		
+		// Crystal animations
+		"crystal_clone", "crystal_death_right", "crystal_death_left", "crystal_repair",
+		"crystal_walk_down", "crystal_walk_right", "crystal_walk_left", "crystal_walk_up",
+		"crystal_shoot_down", "crystal_shoot_right", "crystal_shoot_left", "crystal_shoot_up",
+		"crystal_fire_down", "crystal_fire_right", "crystal_fire_left", "crystal_fire_up",
+		"crystal_punch_down", "crystal_punch_up", "crystal_teleport",
+		"crystal_type_down", "crystal_type_right", "crystal_type_left", "crystal_type_up",
+		"crystal_portrait",
+		
+		// Mantis animations
+		"mantis_clone", "mantis_death_right", "mantis_death_left", "mantis_repair",
+		"mantis_walk_down", "mantis_walk_right", "mantis_walk_left", "mantis_walk_up",
+		"mantis_shoot_down", "mantis_shoot_right", "mantis_shoot_left", "mantis_shoot_up",
+		"mantis_fire_down", "mantis_fire_right", "mantis_fire_left", "mantis_fire_up",
+		"mantis_punch_down", "mantis_punch_up", "mantis_teleport",
+		"mantis_type_down", "mantis_type_right", "mantis_type_left", "mantis_type_up",
+		"mantis_portrait",
+		
+		// Slug animations
+		"slug_clone", "slug_death_right", "slug_death_left", "slug_repair",
+		"slug_walk_down", "slug_walk_right", "slug_walk_left", "slug_walk_up",
+		"slug_shoot_down", "slug_shoot_right", "slug_shoot_left", "slug_shoot_up",
+		"slug_fire_down", "slug_fire_right", "slug_fire_left", "slug_fire_up",
+		"slug_punch_down", "slug_punch_up", "slug_teleport",
+		"slug_type_down", "slug_type_right", "slug_type_left", "slug_type_up",
+		"slug_portrait",
+		
+		// Lanius animations
+		"anaerobic_clone", "anaerobic_death_right", "anaerobic_death_left", "anaerobic_repair",
+		"anaerobic_walk_down", "anaerobic_walk_right", "anaerobic_walk_left", "anaerobic_walk_up",
+		"anaerobic_shoot_down", "anaerobic_shoot_right", "anaerobic_shoot_left", "anaerobic_shoot_up",
+		"anaerobic_fire_down", "anaerobic_fire_right", "anaerobic_fire_left", "anaerobic_fire_up",
+		"anaerobic_punch_down", "anaerobic_punch_up", "anaerobic_teleport",
+		"anaerobic_type_down", "anaerobic_type_right", "anaerobic_type_left", "anaerobic_type_up",
+		"anaerobic_portrait"
+	],
+
+	"shipBlueprint": [
+		"BOSS_1", "BOSS_2", "BOSS_3",
+		"PLAYER_SHIP_EASY", "TUTORIAL_PIRATE", "PLAYER_SHIP_TUTORIAL", "IMPOSSIBLE_PIRATE",
+		"DEFAULT"
+	],
+
+	"weaponBlueprint": [
+		"ARTILLERY_FED",
+		"ARTILLERY_BOSS_1", "ARTILLERY_BOSS_2", "ARTILLERY_BOSS_3", "ARTILLERY_BOSS_4"
+	],
+
+	"droneBlueprint": [
+		"BOSS_DEFENSE_2"
+	],
+
+	"blueprintList": [
+		"CREW_RANDOM"
+	],
+
+	"sectorDescription": [
+		"FINAL", "CRYSTAL_HOME"
+	],
+
+	"eventList": [
+		"DESTROYED_DEFAULT", "NO_FUEL_DISTRESS", "BOSS_WARNING_NODE"
+	],
+
+	"event": [
+		"CREW_STUCK", "FUEL_ESCAPE_SUN", "FUEL_ESCAPE_STORM", "FUEL_ESCAPE_ASTEROIDS",
+		"AUGMENT_FULL", "START_GAME", "TUTORIAL_START", "TUTORIAL_ENEMY", "TOO_MANY_CREW",
+		"START_BEACON", "FINISH_BEACON", "FINISH_BEACON_NEBULA", "FLEET_EASY",
+		"FLEET_EASY_BEACON", "FLEET_EASY_NEBULA", "FLEET_HARD", "NO_FUEL_FLEET",
+		"START_BEACON_BOSS", "FEDERATION_BASE", "BOSS_AUTOMATED", "BOSS_DESTROYED",
+		"BOSS_ESCAPED", "BOSS_TEXT_1", "BOSS_TEXT_2", "BOSS_TEXT_3",
+
+		"CHARACTER_TEST", "BIG_NAME_TEST", "NEW", "DEATH_TEST", "CREW_TEST", "DEMO_END",
+		"ASTEROID_TEST", "FREE_AUG", "FREE_NANO", "CRYSTAL_TEST", "TEST_EVENT2"
+	],
+
+	"ship": [
+		"TEST"
+	],
+
+	"textList": [
+		"GAMEOVER", "TIPS_LIST"
+	]
+}

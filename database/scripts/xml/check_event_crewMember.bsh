@@ -1,0 +1,63 @@
+/*
+  Verifies various errors related to the <crewMember> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/races.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+    
+  String parentName = e.getParentElement().getName();
+
+  if (parentName.equals("crew")) {
+  } else {
+    String clazz = e.getAttributeValue("class");
+    String amount = e.getAttributeValue("amount");
+    
+    int crewAmount = 0;
+    if (amount == null) {
+      result.add(new Error("E_MISSING_ATTR", "amount"));
+    } else {
+      crewAmount = Integer.parseInt(amount);
+    }
+
+    if (clazz != null) {
+      if (!isRace(clazz)) {
+        result.add(new Error("E_INVALID_ARG", "class = " + clazz));
+      }
+      
+      if (crewAmount < 0 && !isTraitor(clazz)) {
+        result.add(new Error("E_INVALID_ARG", "Negative amount must *not* be accompanied by class attribute, unless class=traitor"));
+      }
+      
+      if (crewAmount > 1) {
+        result.add(new Error("E_CREW_AMOUNT_NOT_ONE"));
+      }
+    }
+    
+    boolean hasSkills = false;
+    for (String skillKey : _skills) {
+      String skill = e.getAttributeValue(skillKey);
+      if (skill != null) {
+        int level = Integer.parseInt(skill);
+        if (level < 0 || level > 2) {
+          result.add(new Error("W_NUM_RANGE", "allowed values: 0, 1, 2"));
+        }
+        
+        if (!skillKey.equals("all_skills")) {
+          hasSkills = true;
+        }
+      }
+    }
+    
+    if (e.getAttributeValue("all_skills") != null && hasSkills) {
+      result.add(new Error("W_EVENT_CREW_SKILLS"));
+    }
+  }
+
+  return result;
+}

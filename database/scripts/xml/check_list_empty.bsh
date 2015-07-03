@@ -1,0 +1,19 @@
+/*
+  Checks whether or not a list is empty.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  if (e.getChildren().size() == 0) {
+    result.add(new Error("I_EMPTY_LIST"));
+  }
+
+  return result;
+}

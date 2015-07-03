@@ -1,0 +1,31 @@
+/*
+  Verifies various errors related to the <autoReward> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/reward_levels.bsh");
+source("/database/scripts/data/reward_types.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String resource = e.getValue();
+  String level = e.getAttributeValue("level");
+
+  if (level == null) {
+    result.add(new Error("E_MISSING_ATTR", "level"));
+  } else {
+    if (!isRewardLevel(level)) {
+      result.add(new Error("E_INVALID_ARG", "level = " + level));
+    }
+  }
+
+  if (!isRewardType(resource)) {
+    result.add(new Error("E_INVALID_ARG", resource));
+  }
+
+  return result;
+}

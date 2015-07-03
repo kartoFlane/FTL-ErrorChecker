@@ -1,0 +1,28 @@
+String[] _playerShips = new String[] {
+  "HARD", "HARD_2", "HARD_3",
+  "MANTIS", "MANTIS_2", "MANTIS_3",
+  "STEALTH", "STEALTH_2", "STEALTH_3",
+  "CIRCLE", "CIRCLE_2", "CIRCLE_3",
+  "FED", "FED_2", "FED_3",
+  "JELLY", "JELLY_2", "JELLY_3",
+  "ROCK", "ROCK_2", "ROCK_3",
+  "ENERGY", "ENERGY_2", "ENERGY_3",
+  "CRYSTAL", "CRYSTAL_2",
+  "ANAEROBIC", "ANAEROBIC_2"
+};
+
+boolean isPlayerShip(String type) {
+  type = type.replaceAll("PLAYER_SHIP_", "");
+  for (String s : _playerShips) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+String playerShipToString(String playerShip) {
+  if (playerShip == null)
+    return null;
+  return "PLAYER_SHIP_" + playerShip;
+}

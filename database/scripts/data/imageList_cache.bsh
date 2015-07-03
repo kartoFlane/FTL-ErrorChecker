@@ -1,0 +1,43 @@
+/*
+  This script stores imageLists loaded from events_imageList.xml.
+
+  To get the tag <imageList name="FOO">, call getCachedImageList("FOO") in your script.
+*/
+
+import com.kartoflane.ftl.errorchecker.core.Database;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.ValidationManager;
+
+import org.jdom2.Element;
+// =======================================================
+
+// If not defined, define
+if (_imgMap == void) {
+  super._imgMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _imgMap.clear();
+
+  Database db = context.getDatabase();
+  ValidationManager vm = context.getValidationManager();
+
+  FilePointer imageList = db.getFile("data/events_imageList.xml");
+
+  if (!db.isIgnoredName(imageList.getPack().getName(), imageList.getName())) {
+    Element root = vm.getRootXMLElement(imageList.getInnerPath());
+    if (root != null) {
+      for (Element imageList : root.getChildren("imageList")) {
+        String name = imageList.getAttributeValue("name");
+        if (name != null) {
+          _imgMap.put(name, imageList);
+        }
+      }
+    }
+  }
+}
+
+Element getCachedImageList(String name) {
+  return _imgMap.get(name);
+}

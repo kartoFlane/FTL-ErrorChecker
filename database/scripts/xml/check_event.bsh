@@ -1,0 +1,31 @@
+/*
+  Verifies various errors related to the <event> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/event_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+  
+  String load = e.getAttributeValue("load");
+  if (load != null) {
+    if (getCachedEvent(load) == null) {
+      Element list = getCachedEventList(load);
+      if (list == null) {
+        result.add(new Error("E_BAD_EVENT"));
+      } else {
+        if (list.getChildren().size() == 0) {
+          result.add(new Error("I_EMPTY_LIST"));
+        }
+      }
+    }
+  } else {
+    // TODO: Event loops?
+  }
+
+  return result;
+}

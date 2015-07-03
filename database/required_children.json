@@ -1,0 +1,63 @@
+{
+	// This file lists tag names that are required to be nested inside other tags
+
+	"choice": [
+        "text"
+	],
+
+	"removeCrew": [
+		"text", "clone"
+	],
+
+	"weaponOverride": [
+		"name"
+	],
+
+	"crewBlueprint": [
+		"desc", "cost", "title", "short", "rarity", "powerList"
+	],
+
+	"systemBlueprint": [
+		"type", "title", "desc", "startPower", "maxPower", "rarity", "upgradeCost", "cost"
+	],
+
+	"itemBlueprint": [
+		"type", "title", "desc", "cost", "rarity"
+	],
+
+	"augBlueprint": [
+		"title", "desc", "cost", "rarity", "stackable"
+	],
+
+	"droneBlueprint": [
+		"type", "title", "power", "cost"
+	],
+
+	"shipBlueprint": [
+		"class", "systemList", "health", "maxPower"
+	],
+
+	"anim": [
+		"sheet", "desc", "time"
+	],
+
+	"weaponAnim": [
+		"sheet", "desc", "chargedFrame", "fireFrame", "firePoint", "mountPoint"
+	],
+
+	"sectorDescription": [
+		"nameList"
+	],
+
+	"slot": [
+		"number"
+	],
+
+	"roomLayout": [
+		"computerGlow"
+	],
+
+	"gib": [
+        "velocity", "direction", "angular", "x", "y"
+	]
+}

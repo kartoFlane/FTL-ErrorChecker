@@ -1,0 +1,51 @@
+/* Values used in shipBlueprints, etc */
+String[] _races = new String[] {
+  "HUMAN", "ENGI", "ENERGY", "ROCK", "MANTIS", "SLUG",
+  "CRYSTAL", "ANAEROBIC", "GHOST",
+  /* Works for enemy ships, defaults to human on player ships */
+  "RANDOM"
+};
+
+String[] _skills = new String[] {
+  "shields", "engines", "piloting",
+  "weapons", "repair", "combat",
+  "all_skills"
+};
+
+boolean isRace(String type) {
+  if (isPlayableRace(type) || isTraitor(type))
+    return true;
+
+  return false;
+}
+
+boolean isTraitor(String type) {
+  return "TRAITOR".equalsIgnoreCase(type);
+}
+
+boolean isPlayableRace(String type) {
+  for (String s : _races) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+String raceToString(String raceType) {
+  raceType = raceType.toUpperCase();
+  switch (raceType) {
+    case "NONE":
+      return "<No Crew>";
+    case "ENERGY":
+      return "Zoltan";
+    case "ANAEROBIC":
+      return "Lanius";
+    default:
+      if (raceType == null) {
+        return null;
+      } else {
+        return raceType.substring(0, 1).toUpperCase() + raceType.substring(1).toLowerCase();
+      }
+  }
+}

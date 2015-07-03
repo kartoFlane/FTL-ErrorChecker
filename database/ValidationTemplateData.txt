@@ -1,0 +1,21 @@
+/*
+	Explain what the script does here
+*/
+
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+// =======================================================
+
+/*
+Define your cache collections here, in super scope, like so:
+
+if (_example == void) {
+	super._example = new SomeCollection();
+}
+
+This will prevent the cache collection from being redeclared anew every time
+this script is sourced by other scripts.
+*/
+
+void cacheData(CheckerContext context) {
+	// Cache stuff here
+}

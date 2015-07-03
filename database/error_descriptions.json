@@ -1,0 +1,83 @@
+{
+	// If you wish to define a new error message that is returned by scripts, do so here.
+
+	"error": {
+		// Severe issues that often result in crashes
+		"E_SYNTAX_ERROR":				"Syntax error.",
+		"E_PARSER_ERROR":				"Failed to parse XML code.",
+		
+		"E_NOT_BOOL":                   "Expected a boolean value (either 'true' or 'false').",
+		"E_NOT_INT":                    "Expected an integer number value.",
+		"E_NOT_REAL":                   "Expected a real number value.",
+
+		// Generic
+		"E_MISSING_TAG":				"A required child element is missing from this element.",
+		"E_MISSING_ATTR":               "A required attribute is missing from this element.",
+		"E_MISSING_VAL":                "This tag is required to specify a value between its opening and closing tags.",
+		"E_INVALID_ARG":                "The value of this tag or argument is not valid.",
+		
+		"E_BAD_BLUEPRINT":				"Referenced blueprint name does not exist.",
+		"E_FILE_NOT_FOUND":				"Referenced file does not exist.",
+
+        // Event-related
+		"E_BAD_REQUIREMENT":			"Blueprint name referenced in requirement does not exist.",
+		"E_BAD_EVENT":					"Referenced event or eventList does not exist.",
+		"E_BAD_SHIP_EVENT":				"Referenced ship event name does not exist.",
+		"E_TEXT_VAL_LOAD":              "This 'text' tag has both the 'load' attribute, and value.",
+		"E_BAD_TEXTLIST":				"Referenced text list does not exist.",
+		"E_EVENT_LOOP":					"This event is referenced by one of its children or linked events, creating a loop.",
+		
+		"E_EVENT_SHIP_BOTH_BLUE":       "This ship event has both 'auto_blueprint' and 'blueprint' attributes - this is not allowed.",
+		"E_EVENT_SHIP_ESC_GOTAWAY":     "'gotaway' must be accompanied by an 'escape' tag.",
+		
+		"E_TXT_DOUBLE_LINE":			"Double line break in the middle of txt layout file.",
+		"E_TXT_NO_DOUBLE_LINE_END":		"Missing double line break at the end of txt layout file.",
+		
+		"E_DUPLICATE_ID":				"Two or more objects of the same type share an ID.",
+		
+		"E_MULTI_NONFAKE_PROJECTILES":	"Multiple non-fake projectiles.",
+		
+		"E_CREW_AMOUNT_NOT_ONE":		"This element adds more than one crew; game will crash if player is already at max.",
+		
+		"E_INVALID_ELEMENT":			"This element has an invalid name, or cannot be a child to its ancestor."
+	},
+
+	"warn": {
+		// Issues that may result in buggy behaviour / things not working as expected
+		"W_TEXT_WHITESPACE":            "Text tags must contain at least one non-whitespace character.",
+		"W_TEXT_NO_VALUE":              "This 'text' tag has no text - the event will not work.",
+		"W_TEXT_TOO_LONG":				"Text is too long - around 440 characters max.",
+		
+		"W_BAD_IMAGE_LIST":             "Referenced image list does not exist.",
+		"W_BAD_ANIM_SHEET":				"Referenced anim, weaponAnim, or animSheet does not exist.",
+		
+		"W_NUM_RANGE":                  "Number is not within allowed range.",
+		"W_EVENT_CREW_SKILLS":          "This tag has attributes for individual crew skills, as well as an 'all_skills' attribute.",
+		
+		"W_NO_SLOTS":					"Ship has weapon/drone loadout, but no weapon/drone slots.",
+		"W_BAD_ROOM_LINK":				"ID to which this system is assigned has no corresponding room.",
+		"W_BAD_DOOR_LINK":				"Door links to a non-existing room.",
+		"W_BAD_NAMESPACE":				"Referenced namespace does not exist.",
+		"W_NAMESPACE_MISSING_IMAGE":	"One of the required images is missing from the image namespace.",
+		"W_MISSING_SYSTEM":				"Player ship doesn't have a system declared.",
+		"W_MULTI_TERMINATORS":			"This element contains multiple terminators - only the first one will have effect.",
+		"W_LAST_NOT_TERMINATOR":		"This element contains a terminator that is not last in the nested structure.",
+		"W_WEAPONS_BY_LIST":			"Player ships' weapons can't be defined through a list."
+	},
+
+	"info": {
+		// Low priority stuff that a modder might want to be aware of
+		"I_LOW_BLUEPRINT":			"By convention, blueprint names should be all in upper-case letters.",
+		"I_UP_BLUEPRINT":			"By convention, anim names should be all in lower-case letters.",
+		"I_STATUS_CLEAR_V":         "Type = 'clear' should be accompanied by amount = '100'.",
+		"I_FRAME_COUNT_NOT_INT":	"Dimensions of the anim image do not divide cleanly by frame dimensions.",
+		"I_FRAME_COUNT_MISMATCH":	"Frame count declared in anim does not match the frame count in anim sheet.",
+		
+		"I_LOADOUT_COUNT":			"Weapon/drone count less than the amount of declared weapons/drones.",
+		"I_EMPTY_LIST":             "This list is empty.",
+		"I_MISMATCHED_TAG":			"Mismatched tags; opening tag should have the same name as closing tag.",
+		"I_DIMENSIONS_MISMATCH":	"Dimensions declared in layout file do not match the image's actual dimensions.",
+		"I_UNUSED_TAG":				"This tag is not used by the blueprint.",
+		"I_UNUSED":					"This object is not referenced from anywhere, and is not used in-game."
+	}
+}

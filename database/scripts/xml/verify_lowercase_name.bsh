@@ -1,0 +1,22 @@
+/*
+  Checks whether a named tag's 'name' attribute consists of lowercase letters only.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+// ===============================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  if (e != null) {
+    String name = e.getAttributeValue("name");
+
+    if (name != null && !name.equals(name.toLowerCase())) {
+      result.add(new Error("I_UP_BLUEPRINT"));
+    }
+  }
+
+  return result;
+}

@@ -1,0 +1,62 @@
+/*
+  Verifies various errors related to the <ship> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/blueprint_cache.bsh");
+source("/database/scripts/data/event_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String parentName = e.getParentElement().getName();
+
+  if (parentName.equals("wrapper")) {
+    String load = e.getAttributeValue("auto_blueprint");
+    String loadB = e.getAttributeValue("blueprint");
+    if (load == null) {
+      load = loadB;
+    } else if (loadB != null) {
+      result.add(new Error("E_EVENT_SHIP_BOTH_BLUE"));
+    }
+
+    if (load == null) {
+      result.add(new Error("E_MISSING_ATTR", "auto_blueprint"));
+    } else {
+      if (getCachedBlueprint(load) == null && getCachedBlueprintList(load) == null) {
+        result.add(new Error("E_BAD_BLUEPRINT"));
+      }
+    }
+    
+    Element destroyed = e.getChild("destroyed");
+    Element escape = e.getChild("escape");       // optional, but mandatory if gotaway is present
+    Element gotaway = e.getChild("gotaway");     // optional
+
+    if (destroyed == null) {
+      result.add(new Error("E_MISSING_TAG", "destroyed"));
+    }
+    
+    if (escape == null && gotaway != null) {
+      result.add(new Error("E_EVENT_SHIP_ESC_GOTAWAY"));
+    }
+  }
+  else {
+    String load = e.getAttributeValue("load");
+    String hostile = e.getAttributeValue("hostile");
+    
+    if (load == null) {
+      if (hostile == null) {
+        result.add(new Error("E_MISSING_ATTR", "load"));
+      }
+    } else {
+      if (getCachedShip(load) == null) {
+          result.add(new Error("E_BAD_SHIP_EVENT"));
+      }
+    }
+  }
+
+  return result;
+}

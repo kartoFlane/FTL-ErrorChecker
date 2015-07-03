@@ -1,0 +1,14 @@
+String[] _rewardTypes = new String[] {
+  "STANDARD", "STUFF", "FUEL", "MISSILES", "DRONEPARTS",
+  "FUEL_ONLY", "MISSILES_ONLY", "DRONEPARTS_ONLY",
+  "WEAPON", "AUGMENT", "DRONE", "SCRAP_ONLY", "SCRAP"
+};
+
+boolean isRewardType(String type) {
+  for (String s : _rewardTypes) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}

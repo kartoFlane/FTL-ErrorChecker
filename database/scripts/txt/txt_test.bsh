@@ -1,0 +1,17 @@
+/*
+	TODO
+*/
+
+import com.kartoflane.ftl.layout.LayoutObject;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+// =====================================================
+
+Set validate(CheckerContext context, LayoutObject lo) {
+  Set result = new HashSet();
+
+  if (lo != null) {
+    // ...
+  }
+
+  return result;
+}

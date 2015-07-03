@@ -1,0 +1,37 @@
+{
+	// This file lists attributes that expect the input of a specific type, ie. a
+	// numerical or true/false value, etc.
+
+	"hostile": "boolean",
+	"hidden": "boolean",
+	"unique": "boolean",
+	"blue": "boolean",
+	"start": "boolean",
+	"mirror": "boolean",
+	"rotate": "boolean",
+	
+	"amount": "integer",
+	"lvl": "integer",
+	"max_lvl": "integer",
+	"max_group": "integer",
+	"length": "integer",
+	"x": "integer",
+	"y": "integer",
+	"w": "integer",
+	"h": "integer",
+	"fw": "integer",
+	"fh": "integer",
+	"power": "integer",
+	"room": "integer",
+	"drones": "integer",
+	"missiles": "integer",
+	"count": "integer",
+	"gib": "integer",
+	"r": "integer",
+	"g": "integer",
+	"b": "integer",
+	
+	"a": "real",
+	"min": "real",
+	"max": "real"
+}

@@ -1,0 +1,59 @@
+String[] _systems = new String[] {
+  "artillery", "battery", "cloaking", "clonebay",
+  "doors", "drones", "engines", "hacking", "medbay",
+  "mind", "oxygen", "pilot", "sensors", "shields",
+  "teleporter", "weapons",
+  "reactor"
+};
+
+boolean isSystem(String type) {
+  if ("reactor".equals(type))
+    return false;
+  return isEventApplicableSystem(type);
+}
+
+boolean isEventApplicableSystem(String type) {
+  for (String s : _systems) {
+    if (s.equals(type)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+boolean isVanillaSystem(String type) {
+  return !isAESystem(type);
+}
+
+boolean isAESystem(String type) {
+  return "battery".equals(type) || "clonebay".equals(type) ||
+      "hacking".equals(type) || "mind".equals(type);
+}
+
+/** Returns true if the system can have a station (can be manned), false otherwise. */
+boolean systemCanContainStation(String type) {
+  return "shields".equals(type) || "engines".equals(type) ||
+      "weapons".equals(type) || "medbay".equals(type) ||
+      "pilot".equals(type) || "doors".equals(type) ||
+      "sensors".equals(type) || "clonebay".equals(type);
+}
+
+/** Returns true if the system can contain an interior image, false otherwise. */
+boolean systemCanContainInterior(String type) {
+  return !"clonebay".equals(type) && !"teleporter".equals(type);
+}
+
+/** Returns true if the system can have a glow image, false otherwise. */
+boolean systemCanContainGlow(String type) {
+  return "shields".equals(type) || "engines".equals(type) ||
+      "weapons".equals(type) || "pilot".equals(type) ||
+      "cloaking".equals(type);
+}
+
+String systemToString(String systemType) {
+  if (systemType == null) {
+    return null;
+  } else {
+    return systemType.substring(0, 1).toUpperCase() + systemType.substring(1).toLowerCase();
+  }
+}

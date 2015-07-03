@@ -1,0 +1,32 @@
+/*
+  Verifies various errors related to the <img> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/imageList_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String parentName = e.getParentElement().getName();
+
+  if (parentName.equals("event")) {
+    String background = e.getAttributeValue("back");
+    String planet = e.getAttributeValue("planet");
+
+    if (background != null && !background.equalsIgnoreCase("NONE")) {
+      if (getCachedImageList(background) == null)
+        result.add(new Error("W_BAD_IMAGE_LIST", "back"));
+    }
+      
+    if (planet != null && !planet.equalsIgnoreCase("NONE")) {
+      if (getCachedImageList(planet) == null)
+        result.add(new Error("W_BAD_IMAGE_LIST", "planet"));
+    }
+  }
+
+  return result;
+}

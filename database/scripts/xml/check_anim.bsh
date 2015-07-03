@@ -1,0 +1,47 @@
+/*
+  Verifies that the <anim> tag has all the children that it needs
+  to function correctly.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/anim_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  Element sheet = e.getChild("sheet");
+  if (sheet == null) {
+    result.add(new Error("E_MISSING_TAG", "sheet"));
+  }
+
+  Element desc = e.getChild("desc");
+  if (desc == null) {
+    result.add(new Error("E_MISSING_TAG", "desc"));
+  }
+  
+  if (sheet != null && desc != null) {
+    try {
+      Element animSheet = getCachedAnimSheet(sheet.getValue());
+      
+      int length = Integer.parseInt(desc.getAttributeValue("length"));
+      int sheetW = Integer.parseInt(animSheet.getAttributeValue("w"));
+      int sheetH = Integer.parseInt(animSheet.getAttributeValue("h"));
+      int sheetFW = Integer.parseInt(animSheet.getAttributeValue("fw"));
+      int sheetFH = Integer.parseInt(animSheet.getAttributeValue("fh"));
+
+      int framesX = sheetW / sheetFW;
+      int framesY = sheetH / sheetFH;
+
+      if (length != framesX * framesY) {
+        result.add(new Error("I_FRAME_COUNT_MISMATCH", length + " != " + framesX * framesY));
+      }
+    } catch (Exception e) {
+      // Just silence, errors handled by other scripts
+    }
+  }
+
+  return result;
+}

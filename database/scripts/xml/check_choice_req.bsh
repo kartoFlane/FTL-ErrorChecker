@@ -1,0 +1,41 @@
+/*
+  Verifies that the requirement for a choice actually exists.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/blueprint_cache.bsh");
+source("/database/scripts/data/drone_types.bsh");
+source("/database/scripts/data/weapon_types.bsh");
+source("/database/scripts/data/systems.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+  blue = result; // Initialize to non-null value
+
+  String ref = e.getAttributeValue("req");
+  if (ref != null) {
+    // Check for blueprint
+    blue = getCachedBlueprint(ref);
+    if (blue == null) {
+      // Check for blueprintList
+      blue = getCachedBlueprintList(ref);
+    }
+
+    if (blue == null) {
+      // Check for weapon, drone type, or system
+      if (isPlayableDroneType(ref) || isWeaponType(ref) || isEventApplicableSystem(ref)) {
+        // If it is one of those, then it is allowed. Set to non-null.
+        blue = result;
+      }
+    }
+  }
+
+  if (blue == null) {
+    result.add(new Error("E_BAD_REQUIREMENT", ref));
+  }
+
+  return result;
+}

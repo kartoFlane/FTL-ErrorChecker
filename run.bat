@@ -1,0 +1,1 @@
+java -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=10 -jar ec.jar

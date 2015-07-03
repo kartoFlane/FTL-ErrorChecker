@@ -1,0 +1,56 @@
+/*
+  This script stores <anim> and <animSheet> tags from animations.xml
+  and dlcAnimations.xml files in order to allow other scripts to quickly
+  check if the specific anim/animSheet exists in the game files.
+
+  To get the tag <anim name="foo">, call getCachedAnim("foo") in your script.
+  To getthe tag <animSheet name="bar">, call getCachedAnimSheet("bar") in
+  your script.
+*/
+
+import com.kartoflane.ftl.errorchecker.core.Database;
+import com.kartoflane.ftl.errorchecker.core.FilePointer;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.ValidationManager;
+
+import org.jdom2.Element;
+// =======================================================
+
+// If not defined, define
+if (_animMap == void) {
+  super._animMap = new HashMap();
+  super._animSheetMap = new HashMap();
+}
+
+void cacheData(CheckerContext context) {
+  _animMap.clear();
+  _animSheetMap.clear();
+
+  Database db = context.getDatabase();
+  ValidationManager vm = context.getValidationManager();
+
+  FilePointer[] anims = {
+    db.getFile("data/animations.xml"),
+    db.getFile("data/dlcAnimations.xml")
+  };
+
+  for (FilePointer fi : anims) {
+    if (!db.isIgnoredName(fi.getPack().getName(), fi.getName())) {
+      Element root = vm.getRootXMLElement(fi.getInnerPath());
+      for (Element anim : root.getChildren("anim")) {
+        _animMap.put(anim.getAttributeValue("name"), anim);
+      }
+      for (Element animSheet : root.getChildren("animSheet")) {
+        _animSheetMap.put(animSheet.getAttributeValue("name"), animSheet);
+      }
+    }
+  }
+}
+
+Element getCachedAnim(String name) {
+  return _animMap.get(name);
+}
+
+Element getCachedAnimSheet(String name) {
+  return _animSheetMap.get(name);
+}

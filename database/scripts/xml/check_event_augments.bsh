@@ -1,0 +1,36 @@
+/*
+  Verifies various errors related to the <augment> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/blueprint_cache.bsh");
+// =======================================================
+
+boolean isAugment(String s) {
+  Element aug = getCachedBlueprint(s);
+  if (aug != null && aug.getName().equals("augBlueprint")) {
+    return true;
+  } else {
+    aug = getCachedBlueprintList(s);
+  }
+  return s != null;
+}
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String name = e.getAttributeValue("name");
+
+  if (name == null) {
+    result.add(new Error("E_MISSING_ATTR", "name"));
+  } else {
+    if (!name.equalsIgnoreCase("RANDOM") && getCachedBlueprint(name) == null &&
+        getCachedBlueprintList(name) == null) {
+      result.add(new Error("E_BAD_BLUEPRINT"));
+    }
+  }
+
+  return result;
+}

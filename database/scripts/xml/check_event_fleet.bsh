@@ -1,0 +1,25 @@
+/*
+  Verifies various errors related to the <fleet> tag in events.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/fleet_backgrounds.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+
+  String type = e.getValue();
+  
+  if (type == null) {
+    result.add(new Error("E_MISSING_VAL"));
+  } else {
+    if (!isFleetBackground(type)) {
+      result.add(new Error("E_INVALID_ARG", type));
+    }
+  }
+
+  return result;
+}

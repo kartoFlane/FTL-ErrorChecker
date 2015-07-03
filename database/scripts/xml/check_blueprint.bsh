@@ -1,0 +1,47 @@
+/*
+  Verifies that a referenced blueprint actually exists.
+*/
+
+import org.jdom2.Element;
+import com.kartoflane.ftl.errorchecker.core.CheckerContext;
+import com.kartoflane.ftl.errorchecker.processing.Error;
+source("/database/scripts/data/blueprint_cache.bsh");
+// =======================================================
+
+Set validate(CheckerContext context, Element e) {
+  Set result = new HashSet();
+  blue = result; // Initialize to non-null value
+
+  String tagName = e.getName();
+  String parName = e.getParentElement().getName();
+
+  // <name> inside <blueprintList> or <weaponBlueprint> inside <droneBlueprint>
+  if ((tagName.equals("name") && parName.equals("blueprintList")) ||
+      (tagName.equals("weaponBlueprint") && parName.equals("droneBlueprint"))) {
+    blue = getCachedBlueprint(e.getValue());
+  }
+  // <weapon> inside <weaponList> or <drone> inside <droneList>
+  else if ((tagName.equals("weapon") && parName.equals("weaponList")) ||
+      (tagName.equals("drone") && parName.equals("droneList"))) {
+    blue = getCachedBlueprint(e.getAttributeValue("name"));
+  }
+  // <weapon> inside of an <event> tag
+  else if (tagName.equals("weapon") && parName.equals("event")) {
+    String ref = e.getAttributeValue("name");
+    if (ref.equals("RANDOM")) {
+      blue = result;
+    }
+    else {
+      blue = getCachedBlueprint(ref);
+      if (blue == null) {
+        blue = getCachedBlueprintList(ref);
+      }
+    }
+  }
+
+  if (blue == null) {
+    result.add(new Error("E_BAD_BLUEPRINT"));
+  }
+
+  return result;
+}

@@ -1,0 +1,12 @@
+String[] _itemTypes = new String[] {
+  "FUEL", "DRONES", "MISSILES", "SCRAP"
+};
+
+boolean isItem(String type) {
+  for (String s : _itemTypes) {
+    if (s.equalsIgnoreCase(type)) {
+      return true;
+    }
+  }
+  return false;
+}
